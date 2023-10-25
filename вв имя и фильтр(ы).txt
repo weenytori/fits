@@ -1,0 +1,106 @@
+вв имя и фильтр(ы)
+вывод: файл с названием звезды, внутри 1ст - JD, 2ст - григ дата, 3ст - фильтры (не вперемешку; отсортировать по возрастанию даты набл), 4ст - зв вел
+
+
+import os
+dat = open('task2_data_1.dat','r+').readlines()
+cell = []
+for i in range(len(dat)):
+    cell.append(["empty"]*4)
+
+lenn = len(dat)
+
+# раскидываем элементы по ячейкам
+for i in range(len(dat)):
+    cell[i] = dat[i].split('    ')
+    if len(cell[i]) == 0:
+        lenn -= 1
+
+for i in range(1,lenn):
+    cell[i][3] = cell[i][3].rstrip()
+
+# ввод данных
+print('введите название объекта заглавными буквами, не используя специальные символы')
+name = str(input())
+print('введите количество фильтров')
+n = int(input())
+filts = []
+for i in range(n):
+    filts.append(input())
+
+# обрабатываем вв имя и имена в файле
+name = name.upper()
+for i in range(n):
+    filts[i] = filts[i].upper()
+
+# делаем все заглавными
+for i in range(lenn):
+    cell[i][0] = cell[i][0].upper()
+    cell[i][2] = cell[i][2].upper()
+
+# удаляем спец.символы в названиях
+sym = 0
+j = 0
+for i in range(lenn):
+    while len(cell[i][0]) != j:
+        if not cell[i][0][j].isalpha():
+            cell[i][0] = cell[i][0][0:j] + cell[i][0][(j+1):]
+            j -= 1
+        j += 1
+    j = 0
+
+# удаляем пробелы в ост столбцах
+for i in range(1,lenn):
+    for k in range(1,4):
+        while len(cell[i][k]) != j:
+            if cell[i][k][j] == " ":
+                cell[i][k] = cell[i][k][0:j] + cell[i][k][(j+1):]
+                j -= 1
+            j += 1
+        j = 0
+
+# создаём файл и шапку таблицы в нём
+new = open('new.dat', 'a+').readlines()
+#os.rename('new.dat', name)
+tab = []
+for i in range(lenn):
+    tab.append(["empty"]*4)
+tab[0][0] = 'HJD 24...'
+tab[0][1] = 'Greg. date'
+tab[0][2] = 'Filter'
+tab[0][3] = 'Magnitude'
+
+# вносим данные в новую таблицу
+numwr = 0
+move = 0
+for i in range(n):
+    for j in range(1,lenn):
+        if (cell[j][2] == filts[i]) and (cell[j][0] == name):
+            tab[j-move][0] = cell[j][1]
+            tab[j-move][2] = filts[i]
+            tab[j-move][3] = cell[j][3]
+            numwr += 1
+        else:
+            move += 1
+    move += 1
+lentab = numwr + 1
+
+# перевод юлианской даты в григорианскую
+for i in range(1,lentab):
+    time = (float(tab[i][0])+2400000) % 1
+    a = int(tab[i][0]) + 32044
+    b = (4*a+3)//146097
+    c = a - (146097*b)//4
+    d = (4*c+3)//1461
+    e = c - (1461*d)//4
+    m = (5*e+2)//153
+    day = e - (153*m+2)//5 + 1
+    month = m + 3 - 12*(m//10)
+    year = 100*b + d - 4800 + m//10
+    hours = (time * 24) // 1
+    mins = (((time * 24) % 1) * 60) // 1
+    secs = ((((time * 24) % 1) * 60) % 1) * 60
+    tab[i][1] = str(year)+'.'+str(month)+'.'+str(day)+' '+str(hours)+':'+str(mins)+':'+str(secs)
+
+print(cell)
+print(tab)

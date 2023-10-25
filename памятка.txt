@@ -1,0 +1,337 @@
+== - равно
+= - присвоение
+!= - неравно
+% - остаток от деления
+** - возведение в степень
+
+переменную нельзя звать:
+- кириллицей
+- _, __ ...
+- 1...
+- так же как и операторы
+- ., +, -...
+
+как он чувствует регистр
+
+числа:
+- int
+- float (плавающая точка)
+- complex 
+
+последовательности (нумеруются с 0):
+srt - строка      a = "aaa"       неизм         len(<имя посл-ти>) - выдаёт длину 
+tuple - кортеж                    неизм         obj = () - пустой
+list - список                     изм           stars = [] - пустой; не нужно вводить длину заранее; замена: stars[1] = 9.8
+
+for i in <имя посл-ти>: - принимает значения элементов посл-ти 
+
+bool - 0 и 1
+
+
+if a>b:
+_ _ _ _ print (a)
+else:
+_ _ _ _ print (b)
+
+
+else + if = elif
+
+for i in range (0, 5, 1)                        задаёт последовательность (нач число (ум), конеч число (не входит), шаг (ум))
+
+a,b = b,a - перекрёстное приравнивание
+
+a = int(input("введите выражение"))
+
+a,m = input(), input()
+
+разделяем строку на посл-ть чисел: a = input().split(",")      на выходе даёт список из строк, перезаписать в int можно циклом
+
+
+
+
+
+
+
+
+a = [1,2,3,6,7,90]
+a2 = [6,8,4]
+b = (1,2,"3")
+c = "aaaaaa"
+
+# print(a,b,c)
+# print(1 (not) in a)     # проверяем наличие в списке
+
+# print(a[1:5:2])     # срез с шагом 2
+
+# print(min(a))
+
+# print(a.index(6))
+
+# a.append(6)
+# print(a)          #добавляем в конец
+
+# print(a.count(6))       # считаем повторения
+
+# del a[1:3]
+# print(a)        # удаление среза
+
+# a.clear()
+# print(a)       # очистка
+
+# b = a.copy()
+# print(b,a)
+
+
+
+# умножаем числа на свои первые цифры
+b = int(input())
+while (b<=10**9) and (str(b)[0]!="1"):
+#    b = b*(b//10^((len(str(b))-1)))
+    b = b*int(str(b)[0])
+#    if b == bdo:
+#        break
+print(b)
+
+
+
+
+
+a = str(input())
+if len(a)>=8:
+    print("OK")
+else:
+    print("слишком короткий пароль")
+
+a2 = str(input())
+# if a != a2:
+  #  print("пароли не совпадают")
+
+while a != a2:
+    print("пароли не совпадают")
+    a2 = str(input())
+
+
+# проверить на целую степень двойкиj
+# поступает 2 отсорт списка (по неубыванию), из них один список отсорт по неубыванию
+# проверитт матрицу nхn на магический квадрат
+
+
+
+# посчитать, на сколько рядов кубиков хватит набора из n кубиков (вывести кол-во рядов)
+n = int(input())
+b = 0
+i = 1
+while n > 0:
+    if n >= i:
+        b += 1
+    i += 1
+    n -= i
+print(b)
+
+
+# сколько задач решит чел до отъезда элки
+n = int(input())
+k = int(input())
+time = 240
+i = 0
+while time>k and i<=n:
+    i = i + 1
+    time = time-i*5
+if time == k:
+    print(i)
+else:
+    print(i-1)
+
+
+
+# вывести n первых строк треугольника паскаля
+n = int(input())
+s1 = [1,0]
+s2 = []
+# print(1)
+for j in range(n+1):
+    for i in range(n+1):
+        s2.append(s2[i]+s2[i-1])
+    print(s2)
+
+
+
+# вывести последовательность спиралью
+n = int(input())
+k = int(input())
+mat = []
+for i in range(n):
+    mat.append(["empty"]*k)
+x, y = 0, 0
+dx, dy = 0, 1
+
+for i in range(n*k):
+    mat[x][y] = i
+    new_x, new_y = x+dx, y+dy
+    if new_x<n and new_y<k and mat[new_x][new_y] == "empty":
+        x, y = new_x, new_y
+    else:
+        dx, dy = dy, -dx
+        x = x+dx
+        y = y+dy
+
+for i in mat:
+    print(i)
+
+
+
+# написаны n чисел по кругу, вычёркиваем каждое k-е и выводим последнее выжившее
+n = int(input())
+k = int(input())
+cir = []
+for i in range (1,n+1):
+    cir.append(i)
+for i in cir:
+    print(i)
+
+i = 0
+d = 0
+# for i in range(n):
+#    if i == k:
+#        del cir[i,1]
+
+
+while i<=n:
+    i += 1
+    if i % k == 0:
+        del cir[(i-1-d):(i-d)]
+        d += 1
+    if i == n:
+        i = 1
+    elif len(cir) == 1:
+        i = n+1
+
+print(cir)
+
+
+# создать ф-ю welcome(<название места>)
+def welcome(place):
+    name = input()
+    print(f'Добро пожаловать в {place}, {name}')
+    return(place)
+
+welcome('казань')
+
+
+
+# на вход целое число, на выходе пишет квадрат и куб
+def st(n):
+    n2 = n**2
+    n3 = n**3
+    print(f'квадрат числа {n} равен {n2}, а куб - {n3}')
+    return(n)
+
+st(int(input()))
+
+
+
+# проверяет переданный пароль и печатает гуд или не гуд (10+ символов, что-то из {!@&%*#}, 4+ цифр, 4+ букв, более одной заглавной и строчной)
+def st(passw):
+    num, alfa, low, sup = 0, 0, 0, 0
+    lin = len(passw)
+    if lin >= 10:
+        ln = True
+    for i in range(len(passw)):
+        if passw[i] == "!" or passw[i] == "@" or passw[i] == "#" or passw[i] == "%" or passw[i] == "*":
+            sym = True
+        else:
+            if passw[i].isdigit() == True:
+                num += 1
+            elif passw[i].isalpha() == True:
+                alfa += 1
+                if passw[i].islower() == True:
+                    low += 1
+                else:
+                    sup += 1
+
+    if ln == True and sym == True and num >= 4 and alfa >= 4 and low >= 1 and sup >= 1:
+        print(f'отличный пароль')
+    else:
+        print('слабый пароль')
+    return(passw)
+
+st(str(input()))
+
+
+
+# ф-я принимает два параметра(text,letter), выводит на экран найденное кол-во букв в тексте 
+def st(text,letter):
+    global n, l
+    l = letter
+    text = text.lower()
+    letter = letter.lower()
+    for i in range(len(text)):
+        if text[i] == letter:
+            n += 1
+    return(n)
+
+n = 0
+st(str(input()), str(input()))
+print(f'в данном тексте {n} букв(ы,а) {l}')
+
+
+# сортировка набора чисел челночным бегом
+mass = input().split(" ")
+n = 0
+inf = 1
+sup = 1
+# n = кол-во пробегов по строке, inf = нижняя граница поднимается, sup = веерхняя опускается
+while inf <= len(mass)/2:
+    if n % 2 == 0:
+        for i in range(inf-1, len(mass)-sup):
+            if int(mass[i]) > int(mass[i+1]):
+                mass[i],mass[i+1] = mass[i+1],mass[i]
+        n += 1
+        sup += 1
+    else:
+        for i in range(len(mass)-sup, inf-2, -1):
+            if int(mass[i]) > int(mass[i+1]):
+                mass[i],mass[i+1] = mass[i+1],mass[i]
+        n += 1
+        inf += 1
+
+print(mass)
+
+
+
+round(число, кол-во знаков после запятой)                       банковское округление, к ближайшему чёт числу
+
+continue в конце цикла                                          прекращает данную иттерацию, начинает следующую
+
+def <имя ф-и> (аргументы):                                      функция
+	тело функции
+	return <возвращаемые знач>
+для вызова пишем название ф-и
+a = <имя ф-и>(аргументы)
+
+
+
+
+import matplotlib.pyplot as plt
+x = [-3, -1, 0, 1, 3]
+y = [7, 2, 1, 2, 7]
+z = [2,23,15,8,19]
+#plt.skatter(x,y, marker = 'x', markersize = 20, color = 'red')
+#plt.bar(x,y)
+fig = plt.figure(figsize = (10,80))
+#a = fig.subplots(2,2)
+plt.subplot(2,2,1)
+plt.plot(x,y)
+plt.scatter(x,z)
+plt.xlabel('jjj')
+plt.ylabel('fff')
+
+plt.subplot(2,2,4)
+
+#plt.pie(y)
+
+#plt.title('kkk')
+
+plt.subplots_adjust(wspace = 0.5, hspace = 0.5)
+plt.savefig('joj.png') # сохранение в ту же директорию; можно настроить разрешение
+plt.show()
